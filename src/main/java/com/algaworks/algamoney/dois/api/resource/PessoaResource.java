@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.algaworks.algamoney.dois.api.event.RecursoCriadoEvent;
 import com.algaworks.algamoney.dois.api.model.Pessoa;
 import com.algaworks.algamoney.dois.api.repository.PessoaRepository;
+import com.algaworks.algamoney.dois.api.service.PessoaService;
 
 
 
@@ -33,6 +35,14 @@ public class PessoaResource {
 	
 	@Autowired
 	private ApplicationEventPublisher publisher;
+	
+	@Autowired
+	private PessoaService pessoaService;
+	
+	@GetMapping
+	public List<Pessoa> listar() {
+		return pessoaRepository.findAll();
+	}
 	
 	@PostMapping
 	public ResponseEntity<Pessoa> criar(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response) {
@@ -54,8 +64,32 @@ public class PessoaResource {
 		pessoaRepository.delete(codigo);
 	}
 
-	@GetMapping
-	public List<Pessoa> listar() {
-		return pessoaRepository.findAll();
+	@PutMapping("/{codigo}")
+	public ResponseEntity<Pessoa> atualizar(@PathVariable Long codigo, @Valid @RequestBody Pessoa pessoa) {
+		pessoa = pessoaService.atualizar(codigo, pessoa);
+		return ResponseEntity.ok(pessoa);
 	}
+	
+	@PutMapping("/{codigo}/ativo")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public ResponseEntity<Pessoa> alterarStatus(@PathVariable Long codigo, @RequestBody Boolean ativo) {
+		Pessoa pessoa = pessoaService.alterarStatus(codigo, ativo);
+		return ResponseEntity.ok(pessoa);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
