@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -22,7 +24,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class AlgamoneyExceptionHandler extends ResponseEntityExceptionHandler {
-	
+
 	@Autowired
 	private MessageSource messageSource;
 
@@ -32,31 +34,47 @@ public class AlgamoneyExceptionHandler extends ResponseEntityExceptionHandler {
 		String mensagem = messageSource.getMessage("mensagem.invalida", null, LocaleContextHolder.getLocale());
 		String descricao = ex.getCause() != null ? ex.getCause().getMessage() : ex.getMessage();
 		List<Erro> erros = Arrays.asList(new Erro(mensagem, descricao));
-		return handleExceptionInternal(ex, erros , headers, status, request);
+		return handleExceptionInternal(ex, erros, headers, status, request);
 	}
-	
+
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		List<Erro> erros = criarListaErros(ex.getBindingResult());
 		return handleExceptionInternal(ex, erros, headers, status, request);
 	}
-	
-	@ExceptionHandler({EmptyResultDataAccessException.class})
-	public ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException exception, WebRequest request) {
-		String mensagem = messageSource.getMessage("mensagem.recurso.nao-encontrado", null, LocaleContextHolder.getLocale());
+
+	@ExceptionHandler({ EmptyResultDataAccessException.class })
+	public ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException exception,
+			WebRequest request) {
+		String mensagem = messageSource.getMessage("mensagem.recurso.nao-encontrado", null,
+				LocaleContextHolder.getLocale());
 		String descricao = exception.getCause() != null ? exception.getCause().getMessage() : exception.getMessage();
 		List<Erro> erros = Arrays.asList(new Erro(mensagem, descricao));
 		return handleExceptionInternal(exception, erros, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 	}
-	
+
+	@ExceptionHandler({JpaObjectRetrievalFailureException.class})
+	public ResponseEntity<Object> handleJpaObjectRetrievalFailureException(JpaObjectRetrievalFailureException exception,
+			WebRequest request) {
+		
+		String mensagem = messageSource.getMessage("mensagem.recurso.operacao-nao-permitida", null,
+				LocaleContextHolder.getLocale());
+		Throwable cause = ExceptionUtils.getRootCause(exception);
+		String descricao = cause.getMessage();
+		List<Erro> erros = Arrays.asList(new Erro(mensagem, descricao));
+		return handleExceptionInternal(exception, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+		
+	}
+
 	private List<Erro> criarListaErros(BindingResult bindingResult) {
 		List<Erro> erros = new ArrayList<>();
-		
+
 		for (ObjectError error : bindingResult.getAllErrors()) {
-			String mensagemUsuario = messageSource.getMessage(bindingResult.getFieldError(), LocaleContextHolder.getLocale());
+			String mensagemUsuario = messageSource.getMessage(bindingResult.getFieldError(),
+					LocaleContextHolder.getLocale());
 			String mensagemDesenvolvedor = error.toString();
-			erros.add(new Erro(mensagemUsuario, mensagemDesenvolvedor)); 
+			erros.add(new Erro(mensagemUsuario, mensagemDesenvolvedor));
 		}
 		return erros;
 	}
@@ -79,6 +97,5 @@ public class AlgamoneyExceptionHandler extends ResponseEntityExceptionHandler {
 			return descricao;
 		}
 
-		
 	}
 }

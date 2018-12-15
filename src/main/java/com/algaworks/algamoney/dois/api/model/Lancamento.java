@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = "lancamento")
 public class Lancamento {
@@ -21,7 +22,7 @@ public class Lancamento {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
-
+	
 	private String descricao;
 
 	@Column(name = "data_vencimento")
@@ -30,15 +31,12 @@ public class Lancamento {
 	@Column(name = "data_pagamento")
 	private LocalDate dataPagamento;
 
-	
-
 	private BigDecimal valor;
 
 	private String observacao;
-	
+
 	@Enumerated(EnumType.STRING)
-	@Column(name="tipo")
-	private TipoLancamento tipoLancamento;
+	private TipoLancamento tipo;
 
 	@ManyToOne
 	@JoinColumn(name = "codigo_categoria")
@@ -47,7 +45,7 @@ public class Lancamento {
 	@ManyToOne
 	@JoinColumn(name = "codigo_pessoa")
 	private Pessoa pessoa;
-	
+
 	public Long getCodigo() {
 		return codigo;
 	}
@@ -80,6 +78,14 @@ public class Lancamento {
 		this.dataPagamento = dataPagamento;
 	}
 
+	public BigDecimal getValor() {
+		return valor;
+	}
+
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
+	}
+
 	public String getObservacao() {
 		return observacao;
 	}
@@ -88,12 +94,12 @@ public class Lancamento {
 		this.observacao = observacao;
 	}
 
-	public TipoLancamento getTipoLancamento() {
-		return tipoLancamento;
+	public TipoLancamento getTipo() {
+		return tipo;
 	}
 
-	public void setTipoLancamento(TipoLancamento tipoLancamento) {
-		this.tipoLancamento = tipoLancamento;
+	public void setTipo(TipoLancamento tipo) {
+		this.tipo = tipo;
 	}
 
 	public Categoria getCategoria() {
@@ -111,20 +117,12 @@ public class Lancamento {
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
-	
-	public BigDecimal getValor() {
-		return valor;
-	}
-	
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
-	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((categoria == null) ? 0 : categoria.hashCode());
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
 		return result;
 	}
 
@@ -137,10 +135,10 @@ public class Lancamento {
 		if (getClass() != obj.getClass())
 			return false;
 		Lancamento other = (Lancamento) obj;
-		if (categoria == null) {
-			if (other.categoria != null)
+		if (codigo == null) {
+			if (other.codigo != null)
 				return false;
-		} else if (!categoria.equals(other.categoria))
+		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
 	}
