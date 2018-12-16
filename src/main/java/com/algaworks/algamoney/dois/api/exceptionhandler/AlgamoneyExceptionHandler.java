@@ -3,6 +3,7 @@ package com.algaworks.algamoney.dois.api.exceptionhandler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import com.algaworks.algamoney.dois.api.model.Pessoa;
+import com.algaworks.algamoney.dois.api.service.exception.AlgamoneyNegocioException;
 
 @ControllerAdvice
 public class AlgamoneyExceptionHandler extends ResponseEntityExceptionHandler {
@@ -62,6 +66,20 @@ public class AlgamoneyExceptionHandler extends ResponseEntityExceptionHandler {
 				LocaleContextHolder.getLocale());
 		Throwable cause = ExceptionUtils.getRootCause(exception);
 		String descricao = cause.getMessage();
+		List<Erro> erros = Arrays.asList(new Erro(mensagem, descricao));
+		return handleExceptionInternal(exception, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+		
+	}
+	
+
+	@ExceptionHandler({AlgamoneyNegocioException.class})
+	public ResponseEntity<Object> handleAlgamoneyNegocioException(AlgamoneyNegocioException exception,
+			WebRequest request) {
+		
+		String mensagem = messageSource.getMessage(exception.getMessage(), null,
+				LocaleContextHolder.getLocale());
+		Throwable cause = ExceptionUtils.getRootCause(exception);
+		String descricao = Optional.ofNullable(cause).map(causeNaoNula -> causeNaoNula.getMessage()).orElse(mensagem);
 		List<Erro> erros = Arrays.asList(new Erro(mensagem, descricao));
 		return handleExceptionInternal(exception, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 		
