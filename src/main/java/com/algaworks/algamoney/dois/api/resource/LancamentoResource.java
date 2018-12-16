@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.algaworks.algamoney.dois.api.event.RecursoCriadoEvent;
 import com.algaworks.algamoney.dois.api.model.Lancamento;
 import com.algaworks.algamoney.dois.api.repository.LancamentoRepository;
+import com.algaworks.algamoney.dois.api.repository.filter.LancamentoFilter;
 import com.algaworks.algamoney.dois.api.service.LancamentoService;
 
 @RestController
@@ -35,10 +36,16 @@ public class LancamentoResource {
 	@Autowired
 	private ApplicationEventPublisher publisher;
 	
+//	@GetMapping
+//	@ResponseStatus(HttpStatus.OK)
+//	public List<Lancamento> listar() {
+//		return lancamentoRepository.findAll();
+//	}
+	
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public List<Lancamento> listar() {
-		return lancamentoRepository.findAll();
+	public List<Lancamento> pesquisar(LancamentoFilter filter) {
+		return lancamentoRepository.pesquisar(filter);
 	}
 	
 	@GetMapping("/{codigo}")

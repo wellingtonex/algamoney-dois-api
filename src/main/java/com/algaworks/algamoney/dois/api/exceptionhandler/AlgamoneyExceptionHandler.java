@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.algaworks.algamoney.dois.api.model.Pessoa;
 import com.algaworks.algamoney.dois.api.service.exception.AlgamoneyNegocioException;
 
 @ControllerAdvice
