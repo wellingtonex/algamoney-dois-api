@@ -1,12 +1,12 @@
 package com.algaworks.algamoney.dois.api.resource;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,8 +45,8 @@ public class LancamentoResource {
 	
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public List<Lancamento> pesquisar(LancamentoFilter filter) {
-		return lancamentoRepository.pesquisar(filter);
+	public Page<Lancamento> pesquisar(LancamentoFilter filter, Pageable pageable) {
+		return lancamentoRepository.pesquisar(filter, pageable);
 	}
 	
 	@GetMapping("/{codigo}")
