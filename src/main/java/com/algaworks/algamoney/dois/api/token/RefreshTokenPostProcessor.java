@@ -3,7 +3,6 @@ package com.algaworks.algamoney.dois.api.token;
 import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
