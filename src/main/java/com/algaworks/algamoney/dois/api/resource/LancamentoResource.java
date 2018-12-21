@@ -23,6 +23,7 @@ import com.algaworks.algamoney.dois.api.event.RecursoCriadoEvent;
 import com.algaworks.algamoney.dois.api.model.Lancamento;
 import com.algaworks.algamoney.dois.api.repository.LancamentoRepository;
 import com.algaworks.algamoney.dois.api.repository.filter.LancamentoFilter;
+import com.algaworks.algamoney.dois.api.repository.projetion.ResumoLancamento;
 import com.algaworks.algamoney.dois.api.service.LancamentoService;
 
 @RestController
@@ -49,6 +50,13 @@ public class LancamentoResource {
 	@ResponseStatus(HttpStatus.OK)
 	public Page<Lancamento> pesquisar(LancamentoFilter filter, Pageable pageable) {
 		return lancamentoRepository.pesquisar(filter, pageable);
+	}
+	
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+	@GetMapping(params = "resumo")
+	@ResponseStatus(HttpStatus.OK)
+	public Page<ResumoLancamento> resumir(LancamentoFilter filter, Pageable pageable) {
+		return lancamentoRepository.resumir(filter, pageable);
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
