@@ -38,6 +38,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers("/categorias").permitAll()
 				.anyRequest().authenticated()
+				//.and().logout().deleteCookies("refreshToken").logoutSuccessUrl("/").permitAll() //TUDO WELLINGTON NAO FUNCIONA SAPORRA
 				.and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 			.csrf().disable();
