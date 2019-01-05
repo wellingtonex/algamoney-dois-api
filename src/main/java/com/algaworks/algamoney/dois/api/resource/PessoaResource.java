@@ -7,6 +7,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,9 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.algaworks.algamoney.dois.api.event.RecursoCriadoEvent;
 import com.algaworks.algamoney.dois.api.model.Pessoa;
 import com.algaworks.algamoney.dois.api.repository.PessoaRepository;
+import com.algaworks.algamoney.dois.api.repository.projetion.ResumoPessoa;
 import com.algaworks.algamoney.dois.api.service.PessoaService;
-
-
 
 @RestController
 @RequestMapping("/pessoas")
@@ -40,10 +41,16 @@ public class PessoaResource {
 	@Autowired
 	private PessoaService pessoaService;
 	
+	@GetMapping("/all")
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and #oauth2.hasScope('read')")
-	@GetMapping
-	public List<Pessoa> listar() {
-		return pessoaRepository.findAll();
+	public List<ResumoPessoa> listarTodas() {
+		return pessoaService.listarTodas();
+	}
+	
+	@GetMapping(params = "resumo")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+	public Page<ResumoPessoa> resumir(String nome, Pageable pageable) {
+		return pessoaService.resumir(nome, pageable);
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_CATEGORIA') and #oauth2.hasScope('write')")
