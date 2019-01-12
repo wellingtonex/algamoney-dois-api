@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.algamoney.dois.api.dto.LancamentoEstatisticaCategoriaDTO;
+import com.algaworks.algamoney.dois.api.dto.LancamentoEstatisticaDiaDTO;
 import com.algaworks.algamoney.dois.api.event.RecursoCriadoEvent;
 import com.algaworks.algamoney.dois.api.exceptionhandler.Erro;
 import com.algaworks.algamoney.dois.api.model.Lancamento;
@@ -118,10 +119,17 @@ public class LancamentoResource {
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
-	@GetMapping("/estatisticas/porCategoria")
+	@GetMapping("/estatisticas/por-categoria")
 	@ResponseStatus(HttpStatus.OK)    
 	public List<LancamentoEstatisticaCategoriaDTO> porCategoria(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate mesReferencia) {
 		return this.lancamentoRepository.porCategoria(mesReferencia);
+	}
+	
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+	@GetMapping("/estatisticas/por-dia")
+	@ResponseStatus(HttpStatus.OK)    
+	public List<LancamentoEstatisticaDiaDTO> porDia(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate mesReferencia) {
+		return this.lancamentoRepository.porPorDia(mesReferencia);
 	}
 	
 	
