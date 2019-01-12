@@ -11,14 +11,14 @@
 	<field name="tipo" class="com.algaworks.algamoney.dois.api.model.TipoLancamento"/>
 	<field name="pessoa" class="com.algaworks.algamoney.dois.api.model.Pessoa"/>
 	<title>
-		<band height="60" splitType="Stretch">
-			<staticText>
-				<reportElement x="137" y="15" width="280" height="30" uuid="6ecd8c0a-8f50-4b4d-9012-6d1a5c0641cd"/>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="555" height="60" uuid="170b4803-f904-4b0c-ae68-c9817a87baff"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="22"/>
+					<font size="18"/>
 				</textElement>
-				<text><![CDATA[Lançamentos por pessoa]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA["Lançamentos por pessoa de " + DATEFORMAT($P{DT_INICIO}, "dd/MM/yyyy") + " até " + DATEFORMAT($P{DT_FIM}, "dd/MM/yyyy")]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<columnHeader>
@@ -89,6 +89,17 @@
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="0" width="140" height="25" uuid="a700d73e-a48e-4ba2-b0da-ed5f902c7a19"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["Data "+ DATEFORMAT(TODAY(), "dd/MM/yyyy")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="454" y="0" width="100" height="25" uuid="e11ed7e2-8e84-45a1-a3f7-55952207c93d"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 </jasperReport>
