@@ -2,43 +2,39 @@ package com.algaworks.algamoney.dois.api.dto;
 
 import java.math.BigDecimal;
 
-import com.algaworks.algamoney.dois.api.model.Pessoa;
-import com.algaworks.algamoney.dois.api.model.TipoLancamento;
+import com.algaworks.algamoney.dois.api.model.Categoria;
 
 public class LancamentoEstatisticaCategoriaDTO {
-
-	private TipoLancamento tipo;
-	private Pessoa pessoa;
+	
+	private Categoria categoria;
 	private BigDecimal total;
-
-	public LancamentoEstatisticaCategoriaDTO(TipoLancamento tipo, Pessoa pessoa, BigDecimal total) {
-		this.tipo = tipo;
-		this.pessoa = pessoa;
+	
+	
+	public LancamentoEstatisticaCategoriaDTO(Categoria categoria, BigDecimal total) {
+		this.categoria = categoria;
 		this.total = total;
 	}
 
-	public TipoLancamento getTipo() {
-		return tipo;
+
+	public Categoria getCategoria() {
+		return categoria;
 	}
 
-	public void setTipo(TipoLancamento tipo) {
-		this.tipo = tipo;
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
-
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
-	}
 
 	public BigDecimal getTotal() {
 		return total;
 	}
 
+
 	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
+
+	
 
 }

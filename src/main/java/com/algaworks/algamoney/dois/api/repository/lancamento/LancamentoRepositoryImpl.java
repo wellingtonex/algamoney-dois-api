@@ -19,6 +19,7 @@ import org.springframework.util.StringUtils;
 
 import com.algaworks.algamoney.dois.api.dto.LancamentoEstatisticaCategoriaDTO;
 import com.algaworks.algamoney.dois.api.dto.LancamentoEstatisticaDiaDTO;
+import com.algaworks.algamoney.dois.api.dto.LancamentoEstatisticaPessoaDTO;
 import com.algaworks.algamoney.dois.api.model.Categoria_;
 import com.algaworks.algamoney.dois.api.model.Lancamento;
 import com.algaworks.algamoney.dois.api.model.Lancamento_;
@@ -161,6 +162,32 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 		criteriaQuery.groupBy(root.get(Lancamento_.tipo), root.get(Lancamento_.dataVencimento));
 		
 		TypedQuery<LancamentoEstatisticaDiaDTO> query = em.createQuery(criteriaQuery);
+		
+		return query.getResultList();
+	}
+
+
+
+
+	@Override
+	public List<LancamentoEstatisticaPessoaDTO> porPorPessoa(LocalDate inicio, LocalDate fim) {
+		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+		CriteriaQuery<LancamentoEstatisticaPessoaDTO> criteriaQuery = criteriaBuilder.createQuery(LancamentoEstatisticaPessoaDTO.class);
+		
+		Root<Lancamento> root = criteriaQuery.from(Lancamento.class);
+		
+		criteriaQuery.select(criteriaBuilder.construct(LancamentoEstatisticaPessoaDTO.class, 
+				root.get(Lancamento_.tipo), 
+				root.get(Lancamento_.pessoa),
+				criteriaBuilder.sum(root.get(Lancamento_.valor))));
+		
+		criteriaQuery.where(
+				criteriaBuilder.greaterThanOrEqualTo(root.get(Lancamento_.dataVencimento), inicio),
+				criteriaBuilder.lessThanOrEqualTo(root.get(Lancamento_.dataVencimento), fim));
+		
+		criteriaQuery.groupBy(root.get(Lancamento_.tipo), root.get(Lancamento_.pessoa));
+		
+		TypedQuery<LancamentoEstatisticaPessoaDTO> query = em.createQuery(criteriaQuery);
 		
 		return query.getResultList();
 	}

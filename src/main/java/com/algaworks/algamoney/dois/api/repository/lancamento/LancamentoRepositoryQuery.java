@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.algaworks.algamoney.dois.api.dto.LancamentoEstatisticaCategoriaDTO;
 import com.algaworks.algamoney.dois.api.dto.LancamentoEstatisticaDiaDTO;
+import com.algaworks.algamoney.dois.api.dto.LancamentoEstatisticaPessoaDTO;
 import com.algaworks.algamoney.dois.api.model.Lancamento;
 import com.algaworks.algamoney.dois.api.repository.filter.LancamentoFilter;
 import com.algaworks.algamoney.dois.api.repository.projetion.ResumoLancamento;
@@ -19,4 +20,5 @@ public interface LancamentoRepositoryQuery {
 	
 	public List<LancamentoEstatisticaCategoriaDTO> porCategoria(LocalDate mesReferencia);
 	public List<LancamentoEstatisticaDiaDTO> porPorDia(LocalDate mesReferencia);
+	public List<LancamentoEstatisticaPessoaDTO> porPorPessoa(LocalDate inicio, LocalDate fim);
 }

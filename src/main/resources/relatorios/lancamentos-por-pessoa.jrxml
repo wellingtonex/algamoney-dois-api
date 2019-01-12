@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="lancamentos-por-pessoa" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0759a572-e27d-4fc3-9301-5d0fd0870765">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="lancamentos-por-pessoa" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="58acf290-79bc-4138-8b10-a72f7a0d1323">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<parameter name="DT_INICIO" class="java.util.Date"/>
 	<parameter name="DT_FIM" class="java.util.Date"/>
@@ -11,93 +11,88 @@
 	<field name="tipo" class="com.algaworks.algamoney.dois.api.model.TipoLancamento"/>
 	<field name="pessoa" class="com.algaworks.algamoney.dois.api.model.Pessoa"/>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="60" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="555" height="60" uuid="170b4803-f904-4b0c-ae68-c9817a87baff"/>
+				<reportElement x="11" y="15" width="533" height="30" uuid="4c0dc64f-1b05-4145-a713-4d57089e6f8b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Lançamentos por pessoa de " + DATEFORMAT($P{DT_INICIO}, "dd/MM/yyyy") + " até " + DATEFORMAT($P{DT_FIM}, "dd/MM/yyyy")]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Lançamentos por pessoa de " + DATEFORMAT($P{DT_INICIO}, "dd/MM/yyyy") + " até  " + DATEFORMAT($P{DT_FIM}, "dd/MM/yyyy")]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<columnHeader>
 		<band height="25" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="555" height="25" backcolor="#E3E3E3" uuid="fa6dd98c-d5c4-42fe-b1f0-991d6eb975b8"/>
+				<reportElement x="0" y="0" width="555" height="25" backcolor="#D4D4D4" uuid="6286af83-11eb-4a4f-811c-7f1ff4d3dc46"/>
 			</rectangle>
 			<line>
-				<reportElement x="80" y="0" width="1" height="25" uuid="0fc02758-9510-49dc-b138-5586c5751501"/>
+				<reportElement x="80" y="0" width="1" height="25" uuid="57a07db4-d370-440d-889c-2d451fae5c70"/>
 			</line>
 			<line>
-				<reportElement x="455" y="0" width="1" height="25" uuid="300e518c-eba8-4f63-8243-c3a9b760d61e"/>
+				<reportElement x="461" y="0" width="1" height="25" uuid="a3a84aff-06b3-4e87-b66d-ced0367ec30d"/>
 			</line>
 			<staticText>
-				<reportElement positionType="Float" x="1" y="1" width="80" height="23" uuid="f19e9f15-081d-465b-977d-a966aed83a34"/>
+				<reportElement x="1" y="1" width="79" height="23" uuid="4e3327e0-a0b5-4bf4-96f0-0be06a48d412"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Tipo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="80" y="1" width="375" height="23" uuid="bda45671-fa8a-4dc3-8227-fb10ed69dd8b"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Pessoa]]></text>
-			</staticText>
-			<staticText>
-				<reportElement positionType="Float" x="455" y="0" width="100" height="24" uuid="90057df5-c3ff-4666-82ae-279a562e7028"/>
+				<reportElement x="460" y="1" width="95" height="23" uuid="28c8e6f1-c298-4f95-bc28-f0c9aa315282"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="1" width="378" height="23" uuid="2731a6ea-556b-47e6-95ff-909ee28bad4c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Pessoa]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="25" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="1" height="25" uuid="97b64cbd-bf37-42ab-b44f-598d19309f0c"/>
+			</line>
+			<line>
+				<reportElement x="80" y="0" width="1" height="25" uuid="ad4cdbf3-6af5-44c2-9260-74a0f5417bdd"/>
+			</line>
+			<line>
+				<reportElement x="461" y="0" width="1" height="25" uuid="910afb37-4d92-4274-a384-29664034be43"/>
+			</line>
+			<line>
+				<reportElement x="554" y="0" width="1" height="25" uuid="0425291a-62a8-41aa-81de-ccbafca0c581"/>
+			</line>
+			<line>
+				<reportElement x="0" y="24" width="555" height="1" uuid="50d4b333-1e55-411f-8ea1-b9e4e5eeb527"/>
+			</line>
 			<textField>
-				<reportElement mode="Transparent" x="0" y="0" width="80" height="23" isRemoveLineWhenBlank="true" uuid="32e97a2f-5dce-49da-ab6a-c874b762ede7"/>
-				<box topPadding="0" leftPadding="0" bottomPadding="1" rightPadding="1">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+				<reportElement x="5" y="1" width="69" height="23" uuid="2bd81544-88ba-49f7-a9d9-37c6b99bf4e7"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{tipo}.getDescricao()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="80" y="0" width="375" height="23" uuid="8566d890-4e03-405a-a8bd-69933441031b"/>
-				<box topPadding="0" leftPadding="0" bottomPadding="1" rightPadding="1">
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+				<reportElement x="90" y="1" width="370" height="22" uuid="dbe6c9a0-8a52-4702-b728-f98b47da0ea5"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pessoa}.getNome()]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="456" y="0" width="99" height="23" uuid="1c7fad3e-80d8-4ccb-bab2-36e7726c68a0"/>
-				<box topPadding="0" leftPadding="0" bottomPadding="1" rightPadding="0">
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Dotted" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+			<textField pattern="¤#,##0.00;¤-#,##0.00">
+				<reportElement x="461" y="1" width="88" height="24" uuid="89c71af5-f01d-422a-821d-e3b203ef9191"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<pageFooter>
 		<band height="25" splitType="Stretch">
 			<textField>
-				<reportElement x="1" y="0" width="140" height="25" uuid="a700d73e-a48e-4ba2-b0da-ed5f902c7a19"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA["Data "+ DATEFORMAT(TODAY(), "dd/MM/yyyy")]]></textFieldExpression>
+				<reportElement x="1" y="0" width="140" height="25" uuid="51868060-3978-478a-be3c-c7f2b21939fb"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Data " + DATEFORMAT(TODAY(), "dd/MM/yyyy")]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="454" y="0" width="100" height="25" uuid="e11ed7e2-8e84-45a1-a3f7-55952207c93d"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<reportElement x="454" y="0" width="100" height="25" uuid="ab1c2327-7749-4f1c-9322-86b1698276ca"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
