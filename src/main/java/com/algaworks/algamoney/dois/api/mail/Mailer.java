@@ -43,21 +43,21 @@ public class Mailer {
 //		System.out.println("Terminado o envio de e-mail...");
 //	}
 	
-	@EventListener
-	private void teste(ApplicationReadyEvent event) {
-		String template = "mail/avisos-lancamentos-vencidos";
-		
-		List<Lancamento> lanacamentos = repo.findAll();
-		
-		Map<String, Object> variaveis = new HashMap<>();
-		
-		variaveis.put("lancamentos", lanacamentos);
-		
-		this.enviarEmail("testes.algaworks@gmail.com", 
-				Arrays.asList("wellington.siqueira@basis.com.br"), 
-				"Testando", template, variaveis);
-		System.out.println("Terminado o envio de e-mail...");
-	}
+//	@EventListener
+//	private void teste(ApplicationReadyEvent event) {
+//		String template = "mail/avisos-lancamentos-vencidos";
+//		
+//		List<Lancamento> lanacamentos = repo.findAll();
+//		
+//		Map<String, Object> variaveis = new HashMap<>();
+//		
+//		variaveis.put("lancamentos", lanacamentos);
+//		
+//		this.enviarEmail("testes.algaworks@gmail.com", 
+//				Arrays.asList("wellington.siqueira@basis.com.br"), 
+//				"Testando", template, variaveis);
+//		System.out.println("Terminado o envio de e-mail...");
+//	}
 
 	public void enviarEmail(String remetente, List<String> destinatarios, String assunto, String mensagem) {
 
