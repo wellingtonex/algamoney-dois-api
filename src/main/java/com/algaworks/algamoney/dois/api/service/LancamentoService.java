@@ -13,10 +13,13 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.algaworks.algamoney.dois.api.dto.LancamentoEstatisticaPessoaDTO;
+import com.algaworks.algamoney.dois.api.mail.Mailer;
 import com.algaworks.algamoney.dois.api.model.Lancamento;
 import com.algaworks.algamoney.dois.api.model.Pessoa;
+import com.algaworks.algamoney.dois.api.model.Usuario;
 import com.algaworks.algamoney.dois.api.repository.LancamentoRepository;
 import com.algaworks.algamoney.dois.api.repository.PessoaRepository;
+import com.algaworks.algamoney.dois.api.repository.UsuarioRepository;
 import com.algaworks.algamoney.dois.api.service.exception.PessoaInexistenteOuInativaException;
 
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -26,12 +29,20 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Service
 public class LancamentoService {
+	
+	private static final String DESTINATARIOS = "ROLE_PESQUISAR_LANCAMENTO";
 
 	@Autowired
 	private LancamentoRepository repository;
 	
 	@Autowired
 	private PessoaRepository pessoaRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private Mailer mailer;
 	
 	public Lancamento salvar(Lancamento lancamento) {
 		Pessoa pessoa = pessoaRepository.findOne(lancamento.getPessoa().getCodigo());
@@ -69,9 +80,14 @@ public class LancamentoService {
 		return JasperExportManager.exportReportToPdf(jasperPrint);
 	}
 	
+	//dispara todos os dias as 6 da manha
 	@Scheduled(cron  = "0 0 6 * * *" )
 	public void avisarSobreLancamentosVendcidos( ) {
-		System.out.println("<<<<<<<<<<<<<<<<<<<<<   Avisando sobre lançamentos vencidos...");
+		List<Lancamento> vencidos = repository.findByDataVencimentoLessThanEqualAndDataPagamentoIsNull(LocalDate.now());
+		
+		List<Usuario> destinatarios = usuarioRepository.findByPermissoesDescricao(DESTINATARIOS);
+		
+		mailer.avisarSobreLancamentosVencidos(vencidos, destinatarios);
 	}	
 	
 	private void validarPessoa(Lancamento lancamento) {
