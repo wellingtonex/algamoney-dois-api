@@ -25,6 +25,10 @@
 		<jasperreports.version>6.5.1</jasperreports.version>
         <jasperreports-functions.version>6.5.1</jasperreports-functions.version>
         <jasperreports-fonts.version>6.0.0</jasperreports-fonts.version>
+        <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
+        <thymeleaf-layout-dialect.version>2.2.2</thymeleaf-layout-dialect.version>
+        <thymeleaf-extras-data-attribute.version>2.0.1</thymeleaf-extras-data-attribute.version>
+        <thymeleaf-extras-java8time.version>3.0.0.RELEASE</thymeleaf-extras-java8time.version>
 	</properties>
 
 	<dependencies>
@@ -125,6 +129,21 @@
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports-fonts</artifactId>
             <version>${jasperreports-fonts.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-java8time</artifactId>
         </dependency>
 
 	</dependencies>

@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.algaworks.algamoney.dois.api.dto.LancamentoEstatisticaPessoaDTO;
@@ -52,6 +53,27 @@ public class LancamentoService {
 		return repository.save(lancamentoSalvo);
 	}
 	
+	public byte[] relatorioPorPessoa(LocalDate inicio, LocalDate fim) throws Exception {
+		List<LancamentoEstatisticaPessoaDTO> dados = repository.porPorPessoa(inicio, fim);
+
+		Map<String, Object> parametros = new HashMap<>();
+		parametros.put("DT_INICIO", java.sql.Date.valueOf(inicio));
+		parametros.put("DT_FIM", java.sql.Date.valueOf(fim));
+		parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));
+
+		InputStream inputStream = this.getClass().getResourceAsStream("/relatorios/lancamentos-por-pessoa.jasper");
+
+		JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros,
+				new JRBeanCollectionDataSource(dados));
+		
+		return JasperExportManager.exportReportToPdf(jasperPrint);
+	}
+	
+	@Scheduled(cron  = "0 0 6 * * *" )
+	public void avisarSobreLancamentosVendcidos( ) {
+		System.out.println("<<<<<<<<<<<<<<<<<<<<<   Avisando sobre lançamentos vencidos...");
+	}	
+	
 	private void validarPessoa(Lancamento lancamento) {
 		Pessoa pessoa = null;
 		if (lancamento.getPessoa().getCodigo() != null) {
@@ -69,21 +91,5 @@ public class LancamentoService {
 			throw new IllegalArgumentException();
 		}
 		return lancamentoSalvo;
-	}
-	
-	public byte[] relatorioPorPessoa(LocalDate inicio, LocalDate fim) throws Exception {
-		List<LancamentoEstatisticaPessoaDTO> dados = repository.porPorPessoa(inicio, fim);
-
-		Map<String, Object> parametros = new HashMap<>();
-		parametros.put("DT_INICIO", java.sql.Date.valueOf(inicio));
-		parametros.put("DT_FIM", java.sql.Date.valueOf(fim));
-		parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));
-
-		InputStream inputStream = this.getClass().getResourceAsStream("/relatorios/lancamentos-por-pessoa.jasper");
-
-		JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros,
-				new JRBeanCollectionDataSource(dados));
-		
-		return JasperExportManager.exportReportToPdf(jasperPrint);
 	}
 }
