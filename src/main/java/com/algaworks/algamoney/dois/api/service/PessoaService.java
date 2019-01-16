@@ -21,6 +21,9 @@ public class PessoaService {
 
 	public Pessoa atualizar(Long codigo, Pessoa pessoa) {
 		Pessoa pessoaSalva = buscaPeloCodigo(codigo);
+		
+		pessoa.getContatos().forEach(c -> c.setPessoa(pessoa));
+		
 		BeanUtils.copyProperties(pessoa, pessoaSalva, "codigo");
 		return pessoaRepository.save(pessoaSalva);
 	}
@@ -45,5 +48,10 @@ public class PessoaService {
 
 	public Page<ResumoPessoa> resumir(String nome, Pageable pageable) {		
 		return pessoaRepository.resumir(nome, pageable);
+	}
+
+	public Pessoa salvar(Pessoa pessoa) {
+		pessoa.getContatos().forEach(c -> c.setPessoa(pessoa));
+		return pessoaRepository.save(pessoa);
 	}
 }
