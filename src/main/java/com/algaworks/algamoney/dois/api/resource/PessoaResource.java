@@ -41,7 +41,7 @@ public class PessoaResource {
 	@Autowired
 	private PessoaService pessoaService;
 	
-	@GetMapping("/all")
+	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and #oauth2.hasScope('read')")
 	public List<ResumoPessoa> listarTodas() {
 		return pessoaService.listarTodas();
