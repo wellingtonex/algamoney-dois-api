@@ -129,22 +129,35 @@ public class LancamentoResource {
 		return ResponseEntity.badRequest().body(erros);
 	}
 	
+//	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+//	@GetMapping("/estatisticas/por-categoria")
+//	@ResponseStatus(HttpStatus.OK)    
+//	public List<LancamentoEstatisticaCategoriaDTO> porCategoria(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate mesReferencia) {
+//		return this.lancamentoRepository.porCategoria(mesReferencia);
+//	}
+	
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
 	@GetMapping("/estatisticas/por-categoria")
 	@ResponseStatus(HttpStatus.OK)    
-	public List<LancamentoEstatisticaCategoriaDTO> porCategoria(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate mesReferencia) {
-		return this.lancamentoRepository.porCategoria(mesReferencia);
+	public List<LancamentoEstatisticaCategoriaDTO> porCategoria() {
+		return this.lancamentoRepository.porCategoria(LocalDate.of(2018, 2, 1));
 	}
 	
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+//	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+//	@GetMapping("/estatisticas/por-dia")
+//	@ResponseStatus(HttpStatus.OK)    
+//	public List<LancamentoEstatisticaDiaDTO> porDia(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate mesReferencia) {
+//		return this.lancamentoRepository.porPorDia(mesReferencia);
+//	}
+	
 	@GetMapping("/estatisticas/por-dia")
-	@ResponseStatus(HttpStatus.OK)    
-	public List<LancamentoEstatisticaDiaDTO> porDia(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate mesReferencia) {
-		return this.lancamentoRepository.porPorDia(mesReferencia);
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+	public List<LancamentoEstatisticaDiaDTO> porDia() {
+		return this.lancamentoRepository.porDia(LocalDate.of(2018, 2, 1));
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
-	@GetMapping("/relatorios/por-pessoas")
+	@GetMapping("/relatorios/por-pessoa")
 	public ResponseEntity<byte[]> relatorioPorPessoa(
 			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate inicio,
 			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fim) throws Exception {

@@ -19,6 +19,6 @@ public interface LancamentoRepositoryQuery {
 	public Page<ResumoLancamento> resumir(LancamentoFilter filter, Pageable pageable);
 	
 	public List<LancamentoEstatisticaCategoriaDTO> porCategoria(LocalDate mesReferencia);
-	public List<LancamentoEstatisticaDiaDTO> porPorDia(LocalDate mesReferencia);
+	public List<LancamentoEstatisticaDiaDTO> porDia(LocalDate mesReferencia);
 	public List<LancamentoEstatisticaPessoaDTO> porPorPessoa(LocalDate inicio, LocalDate fim);
 }

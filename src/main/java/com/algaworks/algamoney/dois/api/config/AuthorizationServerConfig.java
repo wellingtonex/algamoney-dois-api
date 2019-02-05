@@ -1,6 +1,7 @@
 package com.algaworks.algamoney.dois.api.config;
 
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -34,8 +35,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			.secret("@ngul@r0")
 			.scopes("read", "write")
 			.authorizedGrantTypes("password", "refresh_token")
-			.accessTokenValiditySeconds(120)
-			.refreshTokenValiditySeconds(60 * 5)
+			.accessTokenValiditySeconds((int) TimeUnit.HOURS.toSeconds(1))
+			.refreshTokenValiditySeconds((int) TimeUnit.HOURS.toSeconds(3))
 			.and()
 			.withClient("mobile")
 			.secret("mobile")

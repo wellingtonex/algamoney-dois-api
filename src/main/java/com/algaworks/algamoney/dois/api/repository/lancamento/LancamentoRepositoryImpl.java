@@ -143,7 +143,7 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 
 
 	@Override
-	public List<LancamentoEstatisticaDiaDTO> porPorDia(LocalDate mesReferencia) {
+	public List<LancamentoEstatisticaDiaDTO> porDia(LocalDate mesReferencia) {
 		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 		CriteriaQuery<LancamentoEstatisticaDiaDTO> criteriaQuery = criteriaBuilder.createQuery(LancamentoEstatisticaDiaDTO.class);
 		
